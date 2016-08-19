@@ -53,7 +53,7 @@ public class Tutorial extends JFrame {
 		JEditorPane text = createEditorPane();
 		text.setMargin(new Insets(5, 5, 5, 5));
 		contentPanel.add(text);
-		contentPanel.setPreferredSize(new Dimension(800, 3000));
+		contentPanel.setPreferredSize(new Dimension(2000, 3000));
 		
 		text.setSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
 		JScrollPane pane = new JScrollPane(contentPanel);

@@ -3,6 +3,7 @@ package de.marcbreisinger.AffinityDiagramCreator;
 public class Settings {
 
 	public static float PIXEL2INCH = 92.3361f;
+	//public static float printFactor = 1;
 	public static int POSTIT_CORNER_RADIUS = 20;
 	final static int MAX_CHAR_HEIGHT = 36;
     final static int MIN_FONT_SIZE = 12;

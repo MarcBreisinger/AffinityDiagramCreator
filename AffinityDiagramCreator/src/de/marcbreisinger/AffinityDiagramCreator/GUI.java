@@ -3,6 +3,7 @@ package de.marcbreisinger.AffinityDiagramCreator;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
@@ -21,6 +22,8 @@ import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
@@ -28,6 +31,7 @@ import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -42,6 +46,8 @@ import javax.swing.UIManager;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import de.marcbreisinger.AffinityDiagramCreator.OsCheck.OSType;
 
 public class GUI extends JFrame implements ActionListener, AncestorListener, KeyListener, ComponentListener{
 
@@ -200,8 +206,7 @@ public class GUI extends JFrame implements ActionListener, AncestorListener, Key
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new Tutorial();
-				
+				showTutorial();
 			}
 		});
 	    aboutMenuItem.addActionListener(new ActionListener() {
@@ -243,7 +248,7 @@ public class GUI extends JFrame implements ActionListener, AncestorListener, Key
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new Tutorial();
+				showTutorial();
 			}
 		});
 	    JPanel buttons = new JPanel();
@@ -258,6 +263,22 @@ public class GUI extends JFrame implements ActionListener, AncestorListener, Key
 //	    	new Tutorial();
 //	    	
 //	    }
+	}
+	private void showTutorial(){
+		if (Desktop.isDesktopSupported()) {
+            try {
+            	 String filename = "/index.html";
+            	 java.net.URL helpURL = AffinityDiagramCreator.class.getResource(
+                         filename);
+            	
+				Desktop.getDesktop().browse(helpURL.toURI());
+			} catch (IOException | URISyntaxException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+        } else {
+        	new Tutorial();
+        }
 	}
 	
 	public void importCsv(ReadFile rf){

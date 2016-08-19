@@ -31,10 +31,19 @@ public class PostIt extends JPanel {
 	private static final long serialVersionUID = -3606684329989000039L;
 	public Color color;
 	public String text;
-	private final int edgeLengthPixel;
+	private int edgeLengthPixel;
 	private BasicStroke stroke = new BasicStroke(2.0f);
 	private Font font;
 	private int fontSize;
+	private JTextArea area;
+	public int getFontSize() {
+		return fontSize;
+	}
+	public void setFontSize(int fontSize) {
+		this.fontSize = fontSize;
+		font = new Font("SansSerif", Font.PLAIN, fontSize);
+		area.setFont(font);
+	}
 	private boolean textTooLong = false;
 	//is this post it intended for export or for display on screen
 	private boolean export = false;
@@ -50,7 +59,7 @@ public class PostIt extends JPanel {
 		this.setSize(new Dimension(this.edgeLengthPixel +1, this.edgeLengthPixel +1));
 		fontSize = (int)Integer.valueOf(ADBPreferences.getPreference(ADBPreferences.FONT_SIZE));
 		
-		final JTextArea area = new JTextArea()
+		area = new JTextArea()
         {
 			private static final long serialVersionUID = -3538767890819988969L;
 			@Override
@@ -136,7 +145,7 @@ public class PostIt extends JPanel {
 		
 		setLayout(null);
 		final Rectangle bounds = this.getBounds();
-		int pMargin = (int)(Float.valueOf(ADBPreferences.getPreference(ADBPreferences.POSTIT_MARGIN)) *Settings.PIXEL2INCH);
+		int pMargin = (int)(Float.valueOf(ADBPreferences.getPreference(ADBPreferences.POSTIT_MARGIN)) * Settings.PIXEL2INCH);
 		area.setBounds(bounds.x + pMargin, bounds.y + pMargin, bounds.width - 2 * pMargin, bounds.height - 2 * pMargin);
 		JPanel bg = new JPanel(){
 			/**
@@ -178,7 +187,9 @@ public class PostIt extends JPanel {
 		
 	}
 	public PostIt copy(boolean export){
-		return new PostIt(this.color, this.text, export);
+		PostIt p = new PostIt(this.color, this.text, export);
+		p.setFontSize(fontSize);
+		return p;
 	}
 	FontMetrics pickFont(JTextArea g2,
             String longString,
