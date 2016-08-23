@@ -276,7 +276,7 @@ public class GUI extends JFrame implements ActionListener, AncestorListener, Key
             	
 				Desktop.getDesktop().browse(helpURL.toURI());
 			} catch (IOException | URISyntaxException e1) {
-				// TODO Auto-generated catch block
+				new Tutorial();
 				e1.printStackTrace();
 			}
         } else {
