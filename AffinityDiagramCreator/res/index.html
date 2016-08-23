@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Affinity Diagram Creator V9.1</title>
+</head>
+
+<body>
+<h1>Affinity Diagram Creator </h1>
+<p>Version 1.0.0</p>
+<h2>How does it work?</h2>
+<div>
+  <p>The Creator enables you to make visualisations of &nbsp;Affinity Diagrams with very little manual effort. The diagrams hierarchy and content can be created in a spreadsheet (e.g. in Excel), while the Creator takes care of the visual representation. For this to work the spreadsheet must be structured like in the follwing picture.&nbsp;Topics will be layouted in pages, Cluster can be moved around on pages and within a cluster the layout is happening by itself.</p>
+  <p>&nbsp;</p>
+  <img src="res.hyperesources/excel.jpg" width="1000" height="512">
+  <p>You can use the file AffinityDiagramExample.xlsx as a template.</p>
+  <p>The next step is to export the sheet with the hierarchy (called "all" in the picture above) as .csv to make it readable for the creator. To ensure a maximum encoding compatibility choose "MS-DOS Comma Separated (.csv)</p>
+  &nbsp;</div>
+<img src="res.hyperesources/excelexport.jpg" width="292" height="335" alt=""/>
+<p>Next open the .csv file in Affinity Diagram Creator.</p>
+<img src="res.hyperesources/openDialog.png" width="551" height="424" alt=""/>
+<h1>Layout your diagram</h1>
+<p>When you open a csv file,  the Creator will roughly lay out the diagram and you can then move around the cluster with the mouse. (If you can't see the diagram after opening, try zooming all the way out.)</p>
+<img src="res.hyperesources/view.png"/>
+<p>Some Post-Its are colored red. This shows you that the text would be too long to fit onto the Post-It given the selected font size. There's no need for action as the font size will be reduced accordingly, but you can shorten the text if you want. </p>
+<img src="res.hyperesources/textOverFlowDetail.png"/>
+<p>When you export the Diagram, the marker color will not be exported but the original color of the Post-It.</p>
+<h2>Controls</h2>
+<h3>Move Cluster</h3>
+<p>Grab and move a cluster of Post-Its by clicking and dragging it with the mouse.</p>
+<h3>Zoom</h3>
+<p>You can zoom by </p>
+<ul>
+  
+  <li>using the buttons in the lower right corner</li>
+  <li>holding ALT and scrolling the mouse wheel </li>
+  <li>holding ALT and using the up / down arrow keys</li>
+  <li>using the menu View -&gt; Zoom in / Zoom out </li>
+</ul>
+
+
+<h3>Pan</h3>
+<p>You can pan by </p>
+<ul>
+  <li>using the arrow buttons</li>
+  <li>scrolling on the mouse pad or</li>
+  <li>holding space and dragging with the mouse</li>
+</ul>
+
+<h2>Preferences</h2>
+<p>The size of a page, the size and colors of the Post-Its, the fontsize and all margins and offsets can be configured in File -&gt; Preferences. You can also specify if you want a grid. Specifying 0 for gridsize will show no grid. You can also change the marker color that warns you about overly long text.</p>
+<p>Changing the preferences will only have an effect when you reopen a file. (immediate change will be a feature in upoming releases)</p>
+<h2>Save your work</h2>
+<p>You can also save a layout as an .adc file. Choosing a .adc file in the Open-Menu will load the underlying .csv file and restore your previous layout work. .csv or .adc files are independent of preferences. </p>
+<h2>Exporting the diagram</h2>
+<p>The diagram can be exported as .gif or as .png images via File -&gt; Export PNG or Export GIF.</p>
+</body>
+</html>

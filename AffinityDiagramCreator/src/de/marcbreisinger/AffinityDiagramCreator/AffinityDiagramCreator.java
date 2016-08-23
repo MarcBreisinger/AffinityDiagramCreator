@@ -19,25 +19,30 @@ public class AffinityDiagramCreator {
 	 */
 	public static void main(String[] args) {
 		
-		if(OsCheck.getOperatingSystemType() == OSType.MacOS){
-			System.setProperty("de.marcbreisinger.AffinityDiagramCreator.apple.menu.about.name", "Affinity Diagram Creator");
-			
-			Application application = Application.getApplication();
-			URL url = AffinityDiagramCreator.class.getResource("icon.gif");
-			Image image = null;
-			try {
-				image = ImageIO.read(url);
-				application.setDockIconImage(image);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		
+		
 		
 		
         EventQueue.invokeLater(new Runnable() {
+        	
             @Override
             public void run() {
+            	if(OsCheck.getOperatingSystemType() == OSType.MacOS){
+        			System.setProperty("de.marcbreisinger.AffinityDiagramCreator.apple.menu.about.name", "Affinity Diagram Creator");
+        			
+        			Application application = Application.getApplication();
+        			URL url = AffinityDiagramCreator.class.getResource("/icon.gif");
+        			Image image = null;
+        			try {
+        				image = ImageIO.read(url);
+        				application.setDockIconImage(image);
+        			} catch (IOException e) {
+        				// TODO Auto-generated catch block
+        				e.printStackTrace();
+        			}
+        			
+        		}
+            	
             	new GUI();
             }
         });

@@ -69,7 +69,7 @@ public class GUI extends JFrame implements ActionListener, AncestorListener, Key
 	
 	public GUI(){
 		
-		URL url = AffinityDiagramCreator.class.getResource("icon.gif");
+		URL url = AffinityDiagramCreator.class.getResource("/icon.gif");
 		Image image = null;
 		try {
 			image = ImageIO.read(url);
@@ -216,17 +216,20 @@ public class GUI extends JFrame implements ActionListener, AncestorListener, Key
 				BufferedImage icon = null;
 				try {
 					icon = ImageIO.read(AffinityDiagramCreator.class.getResource("icon@0,3x.gif"));
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					ImageIcon ic = new ImageIcon(icon);
+					//custom title, custom icon
+					JOptionPane.showMessageDialog(null,
+					    "Autor: marc.breisinger@bmw.de ",
+					    "About Affinity Diagram Creator",
+					    JOptionPane.INFORMATION_MESSAGE,
+					    (Icon)ic);
+					
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null,
+						    "Autor: Marc Breisinger <marc.breisinger@bmw.de>",
+						    "About Affinity Diagram Creator",
+						    JOptionPane.INFORMATION_MESSAGE);
 				}
-				ImageIcon ic = new ImageIcon(icon);
-				//custom title, custom icon
-				JOptionPane.showMessageDialog(null,
-				    "Autor: marc.breisinger@bmw.de ",
-				    "About Affinity Diagram Creator",
-				    JOptionPane.INFORMATION_MESSAGE,
-				    (Icon)ic);
 				
 			}
 		});
@@ -339,7 +342,7 @@ public class GUI extends JFrame implements ActionListener, AncestorListener, Key
 		    	
 		    	canvas.preparePage(page);
 		    	Cluster c = new Cluster(pit);
-		    	canvas.add(c, page);
+		    	canvas.add(c, page, true);
 		    	canvas.addMovable(c);
 		    	page.addMovable(c);
 		    	Level2[] l2 = l1[g].children;
@@ -374,7 +377,7 @@ public class GUI extends JFrame implements ActionListener, AncestorListener, Key
 		    			}
 		    			c.add(ec);
 		    		}
-		    		canvas.add(c, page);
+		    		canvas.add(c, page, false);
 		    	}
 		    	int w = page.getLayoutWidth();
 		    	drawingLocation.x +=  w + canvasMargin;

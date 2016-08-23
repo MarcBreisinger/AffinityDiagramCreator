@@ -6,6 +6,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.Point;
@@ -132,21 +133,23 @@ public class Canvas extends Movable implements KeyListener, Observer {
 		BufferedImage ic_pan_closed = null, ic_pan_open = null, ic_zoom = null;
 		
 		try {
-			URL ipcURL = AffinityDiagramCreator.class.getResource("ic_mousepanclosed.png");
-			if(ipcURL!=null){
-				ic_pan_closed = ImageIO.read(ipcURL);
+			URL imageurl = Canvas.class.getResource("ic_mousepanclosed.png");//assuming your package name is images 
+
+	       
+			if(imageurl!=null){
+				ic_pan_closed = ImageIO.read(imageurl);
 				cursorPanClosed = toolkit.createCustomCursor(ic_pan_closed , new Point(0,0), "pan closed");
 			} else {
 				cursorPanClosed = new Cursor(Cursor.HAND_CURSOR);
 			}
-			URL ipo = AffinityDiagramCreator.class.getResource("ic_mousepanopen.png");
+			URL ipo = AffinityDiagramCreator.class.getResource("/ic_mousepanopen.png");
 			if(ipo!=null){
 				ic_pan_open = ImageIO.read(ipo);
 				cursorPanOpen = toolkit.createCustomCursor(ic_pan_open , new Point(0,0), "pan open");
 			} else {
 				cursorPanOpen = new Cursor(Cursor.HAND_CURSOR);
 			}
-			URL iz = AffinityDiagramCreator.class.getResource("ic_zoom.png");
+			URL iz = AffinityDiagramCreator.class.getResource("/ic_zoom.png");
 			if(iz!=null){
 				ic_zoom = ImageIO.read(iz);
 				cursorZoom = toolkit.createCustomCursor(ic_zoom , new Point(0,0), "zoom");
@@ -175,7 +178,7 @@ public class Canvas extends Movable implements KeyListener, Observer {
 	public Cluster[] getMovables(){
 		return movables.toArray(new Cluster[movables.size()]);
 	}
-	public void add(JComponent c, Page p){
+	public void add(JComponent c, Page p, boolean toplevel){
 		int w = c.getWidth();
 		int h = c.getHeight();
 		//c.setBounds(0, 0, w, h);
@@ -184,6 +187,11 @@ public class Canvas extends Movable implements KeyListener, Observer {
 		
 		int pageOnCanvasX = p.getBounds().x;
 		int pageOnCanvasY = p.getBounds().y;
+		
+		
+		if(toplevel){
+			dlx = (p.getBounds().width - c.getBounds().width)/2;	
+		}
 		
 		int pageMargin = (int)((Float.valueOf(ADBPreferences.getPreference(ADBPreferences.PAGE_MARGIN)) * Settings.PIXEL2INCH));
 		c.setBounds(dlx +pageMargin + pageOnCanvasX,  dly + pageMargin + pageOnCanvasY, w, h);
