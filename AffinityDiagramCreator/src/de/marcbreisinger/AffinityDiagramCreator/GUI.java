@@ -19,9 +19,13 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -241,6 +245,8 @@ public class GUI extends JFrame implements ActionListener, AncestorListener, Key
 	    controls = new Controls(this, model);
 	    JButton open = new JButton("Open File (csv or "+Settings.LAYOUT_FILE_EXTENSION+")");
 	    JButton tutorial = new JButton("How does this work?");
+	    JButton exampleExcel = new JButton("Create example .xlsx spreadsheet");
+	    JButton exampleCsv = new JButton("Create example .csv spreadsheet");
 	    open.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -254,11 +260,42 @@ public class GUI extends JFrame implements ActionListener, AncestorListener, Key
 				showTutorial();
 			}
 		});
+	    exampleExcel.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String s = ExportResource("/AffinityDiagramExample.xlsx");
+					JOptionPane.showMessageDialog(((JButton)e.getSource()).getParent(), "Example spreadsheet has been created: "+s);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(((JButton)e.getSource()).getParent(), 
+							"Couldn's create example spreadsheet: "+e1.getLocalizedMessage(),
+							":(", JOptionPane.ERROR_MESSAGE);} 
+			}
+		});
+	    exampleCsv.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String s = ExportResource("/AffinityDiagramExample.csv");
+					JOptionPane.showMessageDialog(((JButton)e.getSource()).getParent(), "Example spreadsheet has been created: "+s);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(((JButton)e.getSource()).getParent(), 
+							"Couldn's create example spreadsheet: "+e1.getLocalizedMessage(),
+							":(", JOptionPane.ERROR_MESSAGE);
+				} 
+			}
+		});
 	    JPanel buttons = new JPanel();
 	    
 	    buttons.setLayout(new FlowLayout());
 	    buttons.add(open);
 	    buttons.add(tutorial);
+	    buttons.add(exampleExcel);
+	    buttons.add(exampleCsv);
 	    getContentPane().add(buttons);
 	    pack();
 	    setVisible(true);
@@ -268,12 +305,14 @@ public class GUI extends JFrame implements ActionListener, AncestorListener, Key
 //	    }
 	}
 	private void showTutorial(){
+		new Tutorial();
+		/*
 		if (Desktop.isDesktopSupported()) {
             try {
             	 String filename = "/index.html";
             	 java.net.URL helpURL = AffinityDiagramCreator.class.getResource(
                          filename);
-            	
+            
 				Desktop.getDesktop().browse(helpURL.toURI());
 			} catch (IOException | URISyntaxException e1) {
 				new Tutorial();
@@ -282,6 +321,7 @@ public class GUI extends JFrame implements ActionListener, AncestorListener, Key
         } else {
         	new Tutorial();
         }
+        */
 	}
 	
 	public void importCsv(ReadFile rf){
@@ -546,4 +586,40 @@ public class GUI extends JFrame implements ActionListener, AncestorListener, Key
 	private void openPreferences(){
 		new ADBPreferencesDialog(this, "Preferences", true, prefs);
 	}
+	/**
+     * Export a resource embedded into a Jar file to the local file path.
+     *
+     * @param resourceName ie.: "/SmartLibrary.dll"
+     * @return The path to the exported resource
+     * @throws Exception
+     */
+    static public String ExportResource(String resourceName) throws Exception {
+        InputStream stream = null;
+        FileOutputStream resStreamOut = null;
+        File f;
+        try {
+  	
+            stream = GUI.class.getResourceAsStream(resourceName);//note that each / is a directory down in the "jar tree" been the jar the root of the tree
+            
+            if(stream == null) {
+                throw new Exception("Cannot get resource \"" + resourceName + "\" from Jar file.");
+            }
+            
+            int readBytes;
+            byte[] buffer = new byte[4096];
+            f = new File("./"+resourceName);
+            resStreamOut = new FileOutputStream(f);
+            
+            while ((readBytes = stream.read(buffer)) > 0) {
+                resStreamOut.write(buffer, 0, readBytes);
+            }
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            stream.close();
+            resStreamOut.close();
+        }
+
+        return f.getAbsolutePath();
+    }
 }
